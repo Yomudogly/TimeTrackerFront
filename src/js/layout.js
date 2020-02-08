@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import App from "./component/App";
@@ -18,6 +17,7 @@ export const Layout = () => {
 		<>
 			<BrowserRouter>
 				<ScrollToTop>
+					<Navbar />
 					<Switch>
 						<Route exact path="/" component={Main} />
 						<Route path="/qr" component={QR} />
@@ -25,6 +25,7 @@ export const Layout = () => {
 						<Route path="/admin" component={Admin} />
 						<Route render={() => <h1>Not found!</h1>} />
 					</Switch>
+					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
 		</>

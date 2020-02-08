@@ -73,6 +73,7 @@
 		"bootstrap": "^4.3.1",
 		"i": "^0.3.6",
 		"luxon": "^1.22.0",
+		"materialize-css": "^1.0.0-rc.2",
 		"moment": "^2.24.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",

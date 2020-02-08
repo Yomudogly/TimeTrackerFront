@@ -1,30 +1,43 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Context from "../store/appContext";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 const AddVanForm = props => {
-	// const { store, actions } = useContext(Context);
+	const { actions, store } = useContext(Context);
 
-	const companyRef = React.createRef();
-	const vinRef = React.createRef();
-	const statusRef = React.createRef();
+	const [company, setCompany] = useState("");
+	const [vin, setVin] = useState("");
 
-	const createVan = event => {
+	const addVan = event => {
 		//.1 stop the form from subbiting
 		event.preventDefault();
-		const van = {
-			company: companyRef.current.value,
-			vin: vinRef.current.value,
-			status: statusRef.current.value
-		};
-		console.log(van);
+
+		actions.createVan({
+			company,
+			vin
+		});
+		//reset the form.
+		event.currentTarget.reset();
 	};
 
 	return (
-		<form className="van-edit" onSubmit={createVan}>
-			<input name="company" ref={companyRef} type="text" placeholder="company" />
-			<input name="vin" ref={vinRef} type="text" placeholder="vin" />
-			<select name="status" ref={statusRef} placeholder="status">
+		<form className="input-field col s6" onSubmit={addVan}>
+			<input
+				name="company"
+				type="text"
+				placeholder="company"
+				required
+				onChange={e => setCompany(e.target.value)}
+				value={company}
+			/>
+			<input
+				name="vin"
+				type="text"
+				required
+				placeholder="vin"
+				onChange={e => setVin(e.target.value)}
+				value={vin}
+			/>
+			<select name="status" placeholder="status">
 				<option value="available"> Good to go</option>
 				<option value="unavailable"> Getting Repairs </option>
 			</select>

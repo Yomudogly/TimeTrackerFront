@@ -10,7 +10,6 @@ import { Footer } from "./footer";
 const App = () => {
 	return (
 		<>
-			<Navbar />
 			<div className="track">
 				<div className="menu">
 					<Header tagline="COUNTDOWN TO NEXT WAVE" />
@@ -18,7 +17,6 @@ const App = () => {
 				<Mainview />
 				<Order />
 			</div>
-			<Footer />
 		</>
 	);
 };
