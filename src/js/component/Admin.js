@@ -4,6 +4,7 @@ import addVan from "./App";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import Login from "./Login";
 
 export const Admin = props => {
 	return (
@@ -30,6 +31,7 @@ export const Admin = props => {
 					</Link>
 				</div>
 			</div>
+			<Login />
 		</div>
 	);
 };

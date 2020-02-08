@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.scss";
 
-const Main = () => {
+const Main = ({ history }) => {
 	const { actions, store } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -14,10 +14,13 @@ const Main = () => {
 		//.1 stop the form from subbiting
 		event.preventDefault();
 
-		actions.login({
-			email,
-			password
-		});
+		actions.login(
+			{
+				email,
+				password
+			},
+			history
+		);
 		//reset the form.
 		event.currentTarget.reset();
 	};
@@ -31,23 +34,20 @@ const Main = () => {
 						<div className="row">
 							<div className="input-field col s6">
 								<input
-									id="email"
 									type="email"
-									requiered
+									required
 									placeholder="Email"
 									className="validate"
 									onChange={e => setEmail(e.target.value)}
 									value={email}
 								/>
-								x{" "}
 							</div>
 						</div>
 						<div className="row">
 							<div className="input-field col s6">
 								<input
-									id="password"
 									type="password"
-									requiered
+									required
 									placeholder="Password"
 									onChange={e => setPassword(e.target.value)}
 									value={password}
@@ -64,6 +64,10 @@ const Main = () => {
 			</div>
 		</div>
 	);
+};
+
+Main.propTypes = {
+	history: PropTypes.object
 };
 
 export default Main;

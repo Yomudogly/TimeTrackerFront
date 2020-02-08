@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
+const Login = () => {
+	const { actions, store } = useContext(Context);
 
-export const login () => {
-    return(){
-        <div>
-            
-        </div>
-    }
-}
+	console.log("This is the actual store", store);
+	return <div />;
+};
+
+export default Login;

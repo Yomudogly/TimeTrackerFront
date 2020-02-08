@@ -1,6 +1,8 @@
+import React, { useState, useEffect } from "react";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			hash: "",
 			company: [],
 			vans: [
 				{
@@ -20,31 +22,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("van added", data);
 			},
 
-			login: data => {
-				console.log(data);
+			login: (data, history) => {
+				fetch("http://loadtrackerapi.herokuapp.com/api/login", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						email: data.email,
+						password: data.password
+					})
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log("This is store: ", data);
+						setStore({
+							hash: data.jwt
+						});
+						history.push("/admin");
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
 			}
-			// Use getActions to call a function within a fuction
-			// loadSomeData: () => {
-			// 	const email = "admin@email.com";
-			// 	const pass = "123456";
-			// 	fetch("http://loadtrackerapi.herokuapp.com/api/login", {
-			// 		method: "POST",
-			// 		headers: {
-			// 			"Content-Type": "application/json"
-			// 		},
-			// 		body: JSON.stringify({
-			// 			email: email,
-			// 			password: pass
-			// 		})
-			// 	})
-			// 		.then(response => response.json())
-			// 		.then(data => {
-			// 			console.log("Success:", JSON.stringify(data));
-			// 		})
-			// 		.catch(error => {
-			// 			console.error("Error:", error);
-			// 		});
-			// }
 		}
 	};
 };
