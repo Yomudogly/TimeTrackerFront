@@ -31,7 +31,8 @@ const injectContext = PassedComponent => {
 			 * state.actions.loadSomeData(); <---- calling this function from the flux.js actions
 			 *
 			 **/
-			state.actions.loadAllVans();
+			//state.actions.loadAllVans();
+			state.actions.getVan(1581035219);
 			// console.log(state.store.hash);
 		}, []);
 

@@ -35,12 +35,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						console.log("Success:", JSON.stringify(data));
 					})
+					.then(() => {
+						getActions().loadAllVans();
+					})
 					.catch(error => {
 						console.error("Error:", error);
 					});
 			},
 
-			loadAllVans: data => {
+			loadAllVans: () => {
 				fetch("https://loadtrackerapi.herokuapp.com/api/van", {
 					method: "GET",
 					headers: {
@@ -54,6 +57,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 							...getStore,
 							vans: data
 						});
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+
+			getVan: id => {
+				fetch("https://loadtrackerapi.herokuapp.com/api/van/" + id, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						return [data.company_name, data.vin];
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+
+			deleteVan: id => {
+				fetch("https://loadtrackerapi.herokuapp.com/api/van/" + id, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+					.then(() => {
+						getActions().loadAllVans();
 					})
 					.catch(error => {
 						console.error("Error:", error);
