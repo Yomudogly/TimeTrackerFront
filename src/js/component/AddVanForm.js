@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-const AddVanForm = props => {
+const AddVanForm = ({ history }) => {
 	const { actions, store } = useContext(Context);
-
 	const [company, setCompany] = useState("");
 	const [vin, setVin] = useState("");
 
@@ -14,7 +14,8 @@ const AddVanForm = props => {
 		actions.createVan({
 			company,
 			vin
-		});
+		}),
+			history;
 		//reset the form.
 		event.currentTarget.reset();
 	};
@@ -44,6 +45,10 @@ const AddVanForm = props => {
 			<button>+ Add Van</button>
 		</form>
 	);
+};
+
+AddVanForm.propTypes = {
+	history: PropTypes.object
 };
 
 export default AddVanForm;

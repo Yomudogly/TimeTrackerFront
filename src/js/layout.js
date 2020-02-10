@@ -7,6 +7,7 @@ import { Footer } from "./component/footer";
 import App from "./component/App";
 import QR from "./component/QRReader";
 import Admin from "./component/Admin";
+import AddVanForm from "./component/AddVanForm";
 import Main from "./views/main";
 
 export const Layout = () => {
@@ -20,6 +21,7 @@ export const Layout = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/" component={Main} />
+						<Route exact path="/addvan" component={AddVanForm} />
 						<Route path="/qr" component={QR} />
 						<Route path="/app" component={App} />
 						<Route path="/admin" component={Admin} />

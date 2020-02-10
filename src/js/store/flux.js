@@ -19,11 +19,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			createVan: data => {
-				console.log("van added", data);
+				fetch("https://loadtrackerapi.herokuapp.com/api/van", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${localStorage.getItem("hashKey")}`
+					},
+					body: JSON.stringify({
+						company_name: data.company,
+						vin: data.vin
+					})
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", JSON.stringify(data));
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
 			},
 
 			login: (data, history) => {
-				fetch("http://loadtrackerapi.herokuapp.com/api/login", {
+				fetch("https://loadtrackerapi.herokuapp.com/api/login", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"
@@ -35,10 +52,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(response => response.json())
 					.then(data => {
-						console.log("This is store: ", data);
 						setStore({
 							hash: data.jwt
 						});
+						localStorage.setItem("hashKey", data.jwt);
 						history.push("/admin");
 					})
 					.catch(error => {
