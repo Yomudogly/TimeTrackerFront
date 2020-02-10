@@ -18,12 +18,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			// VAN
 			createVan: data => {
 				fetch("https://loadtrackerapi.herokuapp.com/api/van", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${localStorage.getItem("hashKey")}`
+						Authorization: `Bearer ${localStorage.getItem("token")}`
 					},
 					body: JSON.stringify({
 						company_name: data.company,
@@ -39,6 +40,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+			loadAllVans: data => {
+				fetch("https://loadtrackerapi.herokuapp.com/api/van", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({
+							...getStore,
+							vans: data
+						});
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+
+			// LOGIN
 			login: (data, history) => {
 				fetch("https://loadtrackerapi.herokuapp.com/api/login", {
 					method: "POST",
@@ -55,7 +77,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							hash: data.jwt
 						});
-						localStorage.setItem("hashKey", data.jwt);
+						localStorage.clear();
+						localStorage.setItem("token", data.jwt);
 						history.push("/admin");
 					})
 					.catch(error => {
